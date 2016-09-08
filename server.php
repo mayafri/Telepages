@@ -22,18 +22,18 @@ class Server extends WebSocketServer {
 		}
 		
 		elseif($command[0] == 'AddBookmark') {
-			$return = $this->pages->AddBookmark($command[1], $command[2], '');
+			$return = $this->pages->AddBookmark($command[1], $command[2], $command[3]);
 		}
 		
 		elseif($command[0] == 'ModifyBookmark') {
-			$return = $this->pages->AddBookmark($command[1], $command[2], $command[3], '');
+			$return = $this->pages->ModifyBookmark($command[1], $command[2], $command[3], $command[4]);
 		}
 		
 		elseif($command[0] == 'RemoveBookmark') {
 			$return = $this->pages->RemoveBookmark($command[1]);
 		}
 		
-		$this->send($user,$message."\x1E".$return);
+		$this->send($user,$message."\x1D".$return);
 	}
 
 	protected function connected ($user) {

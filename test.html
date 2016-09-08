@@ -1,6 +1,7 @@
 <html>
 	<head>
-
+		<link href="style.css" rel="stylesheet" type="text/css">
+		<meta charset="utf-8">
 		<script type="text/javascript">
 			var socket;
 			var lastCommand;
@@ -14,17 +15,37 @@
 					console.log(this.readyState); 
 				};
 				socket.onmessage = function(msg) { 
-					var output = msg.data.split('\x1E');
-					OnMessage(output[0].split('\x1F'), output[1]);
+					var output = msg.data.split('\x1D');
+					OnMessage(document.getElementById('book'), output[0].split('\x1F'), output[1]);
 				};
 			}
 
-			function OnMessage(lastCommand, lastResponse) {
+			function OnMessage(divBook, lastCommand, lastResponse) {
+				function FormatBookmark(name, url, position, index) {
+					return '<li id="'+index+'">\
+					<a href="'+url+'">'+name+'</a>\
+					<span class="menubook"><button onclick="ModifyBookmark(\''+name+'\', \''+url+'\', \''+position+'\', \''+index+'\')">⋯</button>\
+					<button onclick="RemoveBookmark('+index+')">×</button></span>\
+					</li>';
+				}
+			
 				if (lastCommand[0] == 'AddBookmark') {
-					document.getElementById('book').innerHTML += '<li><a href="'+lastCommand[2]+'">'+lastCommand[1]+'</a></li>';
+					divBook.innerHTML += FormatBookmark(lastCommand[1], lastCommand[2], '', lastResponse);
 				}
 				else if (lastCommand[0] == 'GetBookmarks') {
-					document.getElementById('book').innerHTML = lastResponse;
+					divBook.innerHTML = '<ul>';
+					var bookmarks = lastResponse.split('\x1E');
+					for (var i=0 ; i<bookmarks.length-1 ; i++) {
+						var line = bookmarks[i].split('\x1F');
+						divBook.innerHTML += FormatBookmark(line[0], line[1], line[2], line[3]);
+					}
+					divBook.innerHTML += '</ul>';
+				}
+				else if (lastCommand[0] == 'ModifyBookmark') {
+					document.getElementById(lastCommand[4]).outerHTML = FormatBookmark(lastCommand[1], lastCommand[2], lastCommand[3], lastCommand[4]);
+				}
+				else if (lastCommand[0] == 'RemoveBookmark') {
+					divBook.removeChild(document.getElementById(lastCommand[1]));
 				}
 			}
 
@@ -56,6 +77,16 @@
 				var url = window.prompt("URL ?","http://");
 				Send('AddBookmark\x1F'+name+'\x1F'+url+'\x1F');
 			}
+			
+			function ModifyBookmark(name, url, position, index) {
+				var name = window.prompt("Nom du marque-page ?",name);
+				var url = window.prompt("URL ?",url);
+				Send('ModifyBookmark\x1F'+name+'\x1F'+url+'\x1F'+position+'\x1F'+index);
+			}
+
+			function RemoveBookmark(index) {
+				Send('RemoveBookmark\x1F'+index);
+			}
 
 			Init();
 			Send('GetBookmarks');
@@ -63,10 +94,8 @@
 
 	</head>
 	<body>
-		<ul>
-			<span id="book"></span>
-		</ul>
-		<button onclick="AddBookmark()">Send</button>
+		<div id="book"></div>
+		<button onclick="AddBookmark()">New bookmark</button>
 	</body>
 </html>
 

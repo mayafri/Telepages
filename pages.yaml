@@ -1,53 +1,45 @@
 bookmark:
-  - 
-    - Perdu
+  0:
+    - Perdu11
     - http://perdu.com
     - "4"
-  - 
+  1:
     - toto
     - http://toto.com
     - "8"
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
-    - nom du truc
-    - http://url
-    - ""
-  - 
+  11:
     - toto
     - yahoo.fr
     - ""
-  - 
+  12:
     - derftjkl
     - http://yahoo.fr
+    - ""
+  13:
+    - aaaa
+    - http://zzz
+    - ""
+  14:
+    - rrrrr
+    - http://rrrrrr
+    - ""
+  15:
+    - uuuu
+    - uuuuuu
+    - ""
+  16:
+    - rzerezrze
+    - zrezeerzrz
+    - ""
+  17:
+    - aaaaa
+    - ezaeaeazeaez
+    - ""
+  18:
+    - yutyut
+    - tyutyuty
+    - ""
+  19:
+    - soir
+    - soir
     - ""

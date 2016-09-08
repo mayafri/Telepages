@@ -1,0 +1,30 @@
+body {
+    font-family: sans-serif;
+    margin: 1em;
+}
+
+li {
+    list-style-type: none;
+    padding: .2em;
+}
+
+li:hover {
+    background: #EEE;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.menubook {
+    float: right;
+}
+
+.menubook a {
+    margin-left: 1em;
+}

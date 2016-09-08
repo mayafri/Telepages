@@ -6,7 +6,11 @@ class TelePages {
 	private $data = ['bookmark' => [], 'hierarchy' => []];
 	
     function TelePages() {
-  		$this->data = Spyc::YAMLLoad('pages.yaml');
+		$this->Load();
+    }
+    
+    function Load() {
+      	$this->data = Spyc::YAMLLoad('pages.yaml');
     }
     
     function Save() {
@@ -18,9 +22,10 @@ class TelePages {
     }
     
     function GetBookmarks() {
+    	$this->Load();
     	$html = '';
 		foreach ($this->data['bookmark'] as $key => $line) {
-			$html = $html."\t<li><a id=".$key." href='".$line[1]."'>".$line[0]."</a></li>\n";
+			$html = $html.$line[0]."\x1F".$line[1]."\x1F".$line[2]."\x1F".$key."\x1E";
 		}
 		
 		return $html;
@@ -30,10 +35,11 @@ class TelePages {
     	$array = [$name, $url, $position];
     	$this->data['bookmark'][] = $array;
 		$this->Save();
-		return True;
+		end($this->data['bookmark']);
+		return key($this->data['bookmark']);
     }
     
-    function ModifyBookmark($index, $name='', $url='', $position='') {
+    function ModifyBookmark($name='', $url='', $position='', $index) {
     	if ($name != '')
     		$this->data['bookmark'][$index][0] = $name;
     	if ($url != '')
